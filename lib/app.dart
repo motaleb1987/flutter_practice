@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/module_11/class_2_packg.dart';
 import 'package:flutter_practice/module_11/class_3_expended.dart';
 import 'package:flutter_practice/module_11/todo_assignment.dart';
+import 'package:flutter_practice/module_11/tour_pkg_fronted.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_practice/home.dart';
 import 'package:flutter_practice/module_11/responsive.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget{
             // home: ButtonGrp(),
             //home: FlutterInput(),
             home: ThemeTest(),
-            initialRoute: 'todo_list',
+            initialRoute: 'tour_pkg',
             routes: {
               'login': (context)=>ThemeTest(),
               'home': (context)=>Home(),
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget{
               'res_pkg': (context)=>ResponsivePkg(),
               'expended': (context)=>ExpeDisplay(),
               'todo_list': (context)=>MyTodolist(),
+              'tour_pkg': (context)=>TourPkg(),
             },
 
           );
