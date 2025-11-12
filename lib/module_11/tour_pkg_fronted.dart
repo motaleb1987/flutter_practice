@@ -6,12 +6,60 @@ class TourPkg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> items=List.generate(
-        10, (index)=>{
-          'image':  'https://picsum.photos/200?random=$index',
-          'title': 'Item ${index + 1}',
-    }
-    );
+
+    List<Map<String, String>> listPackage = [
+      {
+        'image': 'https://grihotagi.com/storage/images/posts/1740373837.webp',
+        'title': 'Bandarban,Bangladesh',
+        'night': '2 nights,',
+        'day': '3 days',
+        'price': '399',
+      },
+      {
+        'image': 'https://www.dailypost.net/media/imgAll/2023September/coxs-bazar-20240928103318.jfif',
+        'title': 'Cox-Bazar,Bangladesh',
+        'night': '3 nights,',
+        'day': '4 days',
+        'price': '299',
+      },
+      {
+        'image': 'https://www.mustgo.com/wp-content/uploads/2018/04/par_320a.jpg',
+        'title': 'Romantic Paris GateWay',
+        'night': '3 nights,',
+        'day': '4 days',
+        'price': '599',
+      },
+      {
+        'image': 'https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit1440960gsm/events/2022/09/28/d3946839-8e64-4cf3-be55-54509f40c850-1664352831654-0f43d54ef4dd80c9002412227ef2bb58.jpg',
+        'title': 'Bali Adventure Tour',
+        'night': '5 nights,',
+        'day': '6 days',
+        'price': '699',
+      },
+      {
+        'image': 'https://www.explore-vacation.com/uploads/slide/chandragiri-bhaleswor-mahadev-temple-298.jpeg',
+        'title': 'Nepal Tour',
+        'night': '6 nights,',
+        'day': '7 days',
+        'price': '788',
+      },
+      {
+        'image': 'https://swastiktours.com/wp-content/uploads/2024/04/22.webp',
+        'title': 'Maldives Tour',
+        'night': '2 nights,',
+        'day': '3 days',
+        'price': '899',
+      },
+    ];
+
+
+
+    // final List<Map<String, String>> items=List.generate(
+    //     10, (index)=>{
+    //       'image':  'https://picsum.photos/200?random=$index',
+    //       'title': 'Item ${index + 1}',
+    // }
+    // );
 
     return Scaffold(
       body: SafeArea(
@@ -87,7 +135,7 @@ class TourPkg extends StatelessWidget {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: [
                       TourCard(
@@ -143,28 +191,72 @@ class TourPkg extends StatelessWidget {
               ),
 
               // 🔹 ListView replaced by Column + map (No ParentDataWidget error)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  children: List.generate(10, (index) {
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(8.0),
-                        title: const Text(
-                          'Romantic Paris GateWay',
+              Card(
+                elevation: 4,
+                shadowColor: Colors.grey,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: listPackage.length,
+                    itemBuilder: (context, index){
+                      final item  = listPackage[index];
+                      return ListTile(
+                        contentPadding:  EdgeInsets.all(8.0),
+                        title:  Text(
+                          item['title']?.isNotEmpty == true ? item['title']! : '' ,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        subtitle: const Text('4 nights, 5 days'),
+                        subtitle:  Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.access_alarm),
+                                SizedBox(width: 5,),
+                                Text('${ item['night']?.isNotEmpty == true ? item['night']! : ''} '
+                                    '${ item['day']?.isNotEmpty == true ? item['day']! : ''}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                                ),
+
+                              ],
+                            ),
+
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                   Text('\$',
+                                   style: TextStyle(
+                                     fontSize: 16,
+                                     fontWeight: FontWeight.bold,
+                                   ),
+                                   ),
+                                   Text(item['price']?.isNotEmpty == true ? item['price']! : '',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                              ],
+                            ),
+
+                          ],
+                        ),
                         leading: ClipRRect(
-                          borderRadius: const BorderRadius.only(
+                          borderRadius:  BorderRadius.only(
                             topLeft: Radius.circular(8),
                             bottomLeft: Radius.circular(8),
                           ),
                           child: Image.network(
-                            'https://media.gettyimages.com/id/1145042281/photo/diamond-beach-in-nusa-penida-bali.jpg?s=1024x1024&w=gi&k=20&c=TdNQiZLnoxI0Zvm9CPsojZ8I4Xg9CuDhM_pj2L2pTjk=',
-                            width: 80,
-                            height: 100,
+                            item['image']?.isNotEmpty == true ? item['image']! : '',
+                            width: 70,
+                            height: 70,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -172,16 +264,16 @@ class TourPkg extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                             foregroundColor: Colors.white,
+                            padding:  EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                           onPressed: () {},
-                          child: const Text('Book Now'),
+                          child:  Text('Book'),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }
                 ),
               ),
             ],

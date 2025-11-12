@@ -5,8 +5,10 @@ import 'package:flutter_practice/module_11/class_3_expended.dart';
 import 'package:flutter_practice/module_11/todo_assignment.dart';
 import 'package:flutter_practice/module_11/tour_pkg_fronted.dart';
 import 'package:flutter_practice/module_11/tour_pkg_fronted2.dart';
+import 'package:flutter_practice/module_12/calculator.dart';
 import 'package:flutter_practice/module_12/class_1_state.dart';
 import 'package:flutter_practice/module_12/class_2_state_cycle.dart';
+import 'package:flutter_practice/module_13/api_get_data.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_practice/home.dart';
 import 'package:flutter_practice/module_11/responsive.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget{
             // home: ButtonGrp(),
             //home: FlutterInput(),
             home: ThemeTest(),
-            initialRoute: 'tour_pkg',
+            initialRoute: 'api_called',
             routes: {
               'login': (context)=>ThemeTest(),
               'home': (context)=>Home(),
@@ -65,6 +67,8 @@ class MyApp extends StatelessWidget{
               'tour_app2': (context)=>TourPkgApp(),
               'state_class': (context)=>StateClass(),
               'state_life_cycle': (context)=>StateLifeCycle(),
+              'calculator': (context)=>Calculator(),
+              'api_called': (context)=>ApiCalled(),
             },
 
           );
