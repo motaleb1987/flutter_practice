@@ -9,6 +9,8 @@ import 'package:flutter_practice/module_12/calculator.dart';
 import 'package:flutter_practice/module_12/class_1_state.dart';
 import 'package:flutter_practice/module_12/class_2_state_cycle.dart';
 import 'package:flutter_practice/module_13/api_get_data.dart';
+import 'package:flutter_practice/module_13/bmi_calculate.dart';
+import 'package:flutter_practice/module_13/bmi_calculate2.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_practice/home.dart';
 import 'package:flutter_practice/module_11/responsive.dart';
@@ -48,7 +50,7 @@ class MyApp extends StatelessWidget{
             // home: ButtonGrp(),
             //home: FlutterInput(),
             home: ThemeTest(),
-            initialRoute: 'api_called',
+            initialRoute: 'bmi_cal_assign',
             routes: {
               'login': (context)=>ThemeTest(),
               'home': (context)=>Home(),
@@ -69,6 +71,8 @@ class MyApp extends StatelessWidget{
               'state_life_cycle': (context)=>StateLifeCycle(),
               'calculator': (context)=>Calculator(),
               'api_called': (context)=>ApiCalled(),
+              'bmi_calculate': (context)=>CalculatorScreen(),
+              'bmi_cal_assign': (context)=>BmiCalculateAssignment(),
             },
 
           );
