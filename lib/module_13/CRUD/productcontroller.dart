@@ -1,17 +1,17 @@
-
 import 'dart:convert';
 
 import 'package:flutter_practice/module_13/CRUD/model/productModel.dart';
 import 'package:flutter_practice/module_13/CRUD/utils/urls.dart';
 import 'package:http/http.dart' as http;
-class ProductController{
-  List<Data> products =[];
+
+class ProductController {
+  List<Data> products = [];
   bool isLoading = true;
 
   Future fetchProducts() async {
     final response = await http.get(Uri.parse(Urls.readProduct));
-    if(response.statusCode == 200){
-       isLoading = false;
+    if (response.statusCode == 200) {
+      isLoading = false;
       final data = jsonDecode(response.body);
       // data send to ProductModel->fromJson method
       ProductModel model = ProductModel.fromJson(data);
@@ -22,12 +22,30 @@ class ProductController{
   Future<bool> deleteProduct(String ProductId) async {
     final response = await http.get(Uri.parse(Urls.deleteProduct(ProductId)));
     print(Uri.parse(Urls.deleteProduct(ProductId)));
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-
+  Future<bool> createProduct(Data data) async {
+    final response = await http.post(
+      Uri.parse(Urls.readProduct),
+      body: jsonEncode({
+        "ProductName": data.productName,
+        "ProductCode": DateTime.now().microsecondsSinceEpoch,
+        "Img": data.img,
+        "Qty": data.qty,
+        "UnitPrice": data.unitPrice,
+        "TotalPrice": data.totalPrice,
+      }),
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

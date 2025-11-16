@@ -147,8 +147,9 @@ class _CrudState extends State<Crud> {
                             ),
                             IconButton(
                               onPressed: () async {
-                              await  productController.deleteProduct(item.sId.toString()).then((onValue){
+                              await  productController.deleteProduct(item.sId.toString()).then((onValue) async {
                                 if(onValue){
+                                 await fetchData();
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Product Deleted')));
                                 }else{
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Something Went Wrong ..')));
