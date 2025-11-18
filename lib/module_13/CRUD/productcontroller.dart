@@ -29,9 +29,38 @@ class ProductController {
     }
   }
 
+
+  Future<bool> searchProductById(String productId) async {
+    final response = await http.get(Uri.parse(Urls.searchProdById(productId)));
+    print(Uri.parse(Urls.searchProdById(productId)));
+    if(response.statusCode == 200){
+      isLoading = false;
+     // final data = jsonDecode(response.body);
+      //print(data);
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  // Future<bool> updateProduct(String productId) async {
+  //   final response = await http.post(Uri.parse(Urls.updateProduct(productId)));
+  //   print(response.body);
+  //   if(response.statusCode == 200){
+  //     isLoading = false;
+  //    // final data =
+  //     return true;
+  //   }else{
+  //     return false;
+  //   }
+  // }
+
   Future<bool> createProduct(Data data) async {
-    final response = await http.post(
-      Uri.parse(Urls.readProduct),
+    final response = await http.post(Uri.parse(Urls.createProduct),
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+
       body: jsonEncode({
         "ProductName": data.productName,
         "ProductCode": DateTime.now().microsecondsSinceEpoch,

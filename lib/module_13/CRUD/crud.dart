@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/module_13/CRUD/model/productModel.dart';
 import 'package:flutter_practice/module_13/CRUD/productcontroller.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,58 +38,70 @@ class _CrudState extends State<Crud> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Add Product'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: productNameController,
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            SizedBox(height: 10),
-
-            TextField(
-              controller: productImageController,
-              decoration: InputDecoration(labelText: 'Image'),
-            ),
-            SizedBox(height: 10),
-
-            TextField(
-              controller: productQtyController,
-              decoration: InputDecoration(labelText: 'Qty'),
-            ),
-            SizedBox(height: 10),
-
-            TextField(
-              controller: productUnitPriceController,
-              decoration: InputDecoration(labelText: 'Unit Price'),
-            ),
-            SizedBox(height: 10),
-
-            TextField(
-              controller: productTotalPriceController,
-              decoration: InputDecoration(labelText: 'Total Price'),
-            ),
-            SizedBox(height: 10),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(onPressed: (){
-                  Navigator.pop(context);
-                }, child: Text('Cancel')),
-
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                    ),
-                    onPressed: (){}, child: Text('Save'))
-              ],
-            ),
-          ],
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: productNameController,
+                decoration: InputDecoration(labelText: 'Name'),
+              ),
+              SizedBox(height: 10),
+          
+              TextField(
+                controller: productImageController,
+                decoration: InputDecoration(labelText: 'Image'),
+              ),
+              SizedBox(height: 10),
+          
+              TextField(
+                controller: productQtyController,
+                decoration: InputDecoration(labelText: 'Qty'),
+              ),
+              SizedBox(height: 10),
+          
+              TextField(
+                controller: productUnitPriceController,
+                decoration: InputDecoration(labelText: 'Unit Price'),
+              ),
+              SizedBox(height: 10),
+          
+              TextField(
+                controller: productTotalPriceController,
+                decoration: InputDecoration(labelText: 'Total Price'),
+              ),
+              SizedBox(height: 10),
+          
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(onPressed: (){
+                    Navigator.pop(context);
+                  }, child: Text('Cancel')),
+          
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )
+                      ),
+                      onPressed: () async {
+                        productController.createProduct(Data(
+                          productName: productNameController.text,
+                          img: productImageController.text,
+                          qty: int.parse(productQtyController.text),
+                          unitPrice: int.parse(productUnitPriceController.text),
+                          totalPrice: int.parse(productTotalPriceController.text),
+                        ));
+                        await fetchData();
+                        Navigator.pop(context);
+                      }, child: Text('Save'))
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -141,6 +154,7 @@ class _CrudState extends State<Crud> {
                           children: [
                             IconButton(
                               onPressed: () {
+                                productController.searchProductById(item.productCode.toString());
                                 productDialog();
                               },
                               icon: Icon(Icons.edit, color: Colors.orange),
