@@ -27,59 +27,166 @@ class _CrudState extends State<Crud> {
     if (mounted) setState(() {});
   }
 
-  productDialog() {
+  productDialog(Data ? item, {bool isEdit = false}) {
     TextEditingController productNameController = TextEditingController();
     TextEditingController productImageController = TextEditingController();
     TextEditingController productQtyController = TextEditingController();
     TextEditingController productUnitPriceController = TextEditingController();
     TextEditingController productTotalPriceController = TextEditingController();
 
+    if(item != null){
+      productNameController.text = item.productName ?? '';
+      productImageController.text = item.img ?? '';
+      productQtyController.text = item.qty?.toString() ?? '';
+      productUnitPriceController.text = item.unitPrice?.toString() ?? '';
+      productTotalPriceController.text = item.totalPrice?.toString() ?? '';
+    }
+
+    Color addTitleColor = Colors.green;
+    Color editTitleColor = Colors.orange;
+
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add Product'),
+        title: Center(
+          child: Text(item == null ? 'Add Product' : 'Edit Product',
+          style: TextStyle(
+            color: item == null ? addTitleColor: editTitleColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+          ),
+        ),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: productNameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: InputDecoration(labelText: 'Name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange)
+                  ),
+                ),
               ),
               SizedBox(height: 10),
-          
+
               TextField(
                 controller: productImageController,
-                decoration: InputDecoration(labelText: 'Image'),
+                decoration: InputDecoration(labelText: 'Image',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange)
+                  ),
+                ),
               ),
               SizedBox(height: 10),
-          
+
               TextField(
                 controller: productQtyController,
-                decoration: InputDecoration(labelText: 'Qty'),
+                decoration: InputDecoration(labelText: 'Qty',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange)
+                  ),
+                ),
               ),
               SizedBox(height: 10),
-          
+
               TextField(
                 controller: productUnitPriceController,
-                decoration: InputDecoration(labelText: 'Unit Price'),
+                decoration: InputDecoration(labelText: 'Unit Price',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange)
+                  ),
+                ),
               ),
               SizedBox(height: 10),
-          
+
               TextField(
                 controller: productTotalPriceController,
-                decoration: InputDecoration(labelText: 'Total Price'),
+                decoration: InputDecoration(labelText: 'Total Price',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.orange)
+                  ),
+                ),
               ),
               SizedBox(height: 10),
-          
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton(onPressed: (){
                     Navigator.pop(context);
-                  }, child: Text('Cancel')),
-          
-                  ElevatedButton(
+                  }, child: Text('Cancel',
+                  style: TextStyle(
+                    color: Colors.red
+                  ),
+                  )),
+
+                 isEdit ? ElevatedButton(
+                   style: ElevatedButton.styleFrom(
+                     backgroundColor: Colors.orange,
+                     foregroundColor: Colors.white,
+                     shape: RoundedRectangleBorder(
+                       borderRadius: BorderRadius.circular(10),
+                     )
+
+                   ),
+                     onPressed: () async {
+                        productController.updateProduct(
+                            Data(
+                                sId: item!.sId,
+                            productName: productNameController.text,
+                            img: productImageController.text,
+                            qty: int.parse(productQtyController.text),
+                            unitPrice: int.parse(productUnitPriceController.text),
+                            totalPrice: int.parse(productTotalPriceController.text)
+                          ),
+                        );
+                       await fetchData();
+                        Navigator.pop(context);
+                     }, child: Text('Update'))
+                     : ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         foregroundColor: Colors.white,
@@ -88,13 +195,15 @@ class _CrudState extends State<Crud> {
                         )
                       ),
                       onPressed: () async {
-                        productController.createProduct(Data(
-                          productName: productNameController.text,
-                          img: productImageController.text,
-                          qty: int.parse(productQtyController.text),
-                          unitPrice: int.parse(productUnitPriceController.text),
-                          totalPrice: int.parse(productTotalPriceController.text),
-                        ));
+                        productController.createProduct(
+                              Data(
+                            productName: productNameController.text,
+                            img: productImageController.text,
+                            qty: int.parse(productQtyController.text),
+                            unitPrice: int.parse(productUnitPriceController.text),
+                            totalPrice: int.parse(productTotalPriceController.text),
+                          )
+                        );
                         await fetchData();
                         Navigator.pop(context);
                       }, child: Text('Save'))
@@ -113,7 +222,7 @@ class _CrudState extends State<Crud> {
       backgroundColor: Colors.orange.shade50,
       appBar: AppBar(
         title: Text(
-          'API Called',
+          'CRUD (API)',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.orange,
@@ -154,8 +263,8 @@ class _CrudState extends State<Crud> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                productController.searchProductById(item.productCode.toString());
-                                productDialog();
+                                productController.searchProductById(item.sId.toString());
+                                productDialog(item, isEdit: true);
                               },
                               icon: Icon(Icons.edit, color: Colors.orange),
                             ),
@@ -182,7 +291,7 @@ class _CrudState extends State<Crud> {
             ),
       floatingActionButton: FloatingActionButton(
           onPressed: (){
-        productDialog();
+        productDialog(null);
       },
       child: Icon(Icons.add),
       ),
