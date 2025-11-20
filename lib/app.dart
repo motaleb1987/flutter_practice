@@ -11,6 +11,7 @@ import 'package:flutter_practice/module_12/class_2_state_cycle.dart';
 import 'package:flutter_practice/module_13/CRUD/crud.dart';
 import 'package:flutter_practice/module_13/bmi_calculate.dart';
 import 'package:flutter_practice/module_13/bmi_calculate2.dart';
+import 'package:flutter_practice/test_code/crud/form.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_practice/home.dart';
 import 'package:flutter_practice/module_11/responsive.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget{
             // home: ButtonGrp(),
             //home: FlutterInput(),
             home: ThemeTest(),
-            initialRoute: 'crud',
+            initialRoute: 'crud_form',
             routes: {
               'login': (context)=>ThemeTest(),
               'home': (context)=>Home(),
@@ -73,7 +74,8 @@ class MyApp extends StatelessWidget{
               'api_called': (context)=>Crud(),
               'bmi_calculate': (context)=>CalculatorScreen(),
               'bmi_cal_assign': (context)=>BmiCalculateAssignment(),
-              'crud': (context)=>Crud(),
+              'crud_product': (context)=>Crud(),
+              'crud_form': (context)=>CrudForm(),
             },
 
           );
