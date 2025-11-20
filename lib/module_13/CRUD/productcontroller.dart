@@ -30,9 +30,15 @@ class ProductController {
   }
 
 
+<<<<<<< HEAD
   Future<bool> searchProductById(String productId) async {
     final response = await http.get(Uri.parse(Urls.searchProdById(productId)));
     //print(Uri.parse(Urls.searchProdById(productId)));
+=======
+  Future<bool> searchProductById(String id) async {
+    final response = await http.get(Uri.parse(Urls.searchProdById(id)));
+    print(Uri.parse(Urls.searchProdById(id)));
+>>>>>>> 54fdc3e (something change)
     if(response.statusCode == 200){
       isLoading = false;
       final data = jsonDecode(response.body);
