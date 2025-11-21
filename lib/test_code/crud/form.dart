@@ -44,7 +44,7 @@ class _CrudFormState extends State<CrudForm> {
                SizedBox(height: 10,),
 
                TextField(
-                 controller: _qtyController,
+                 controller: qtyController,
                  decoration: InputDecoration(labelText: 'Qty',
                    border: OutlineInputBorder(
                      borderRadius: BorderRadius.circular(10),
@@ -62,7 +62,7 @@ class _CrudFormState extends State<CrudForm> {
                SizedBox(height: 10,),
 
                TextField(
-                 controller: _priceController,
+                 controller: priceController,
                  decoration: InputDecoration(labelText: 'Unit Price',
                    border: OutlineInputBorder(
                      borderRadius: BorderRadius.circular(10),
@@ -138,12 +138,12 @@ class _CrudFormState extends State<CrudForm> {
               textInputType: TextInputType.text,
             ),
             SizedBox(height: 15,),
-            InputField(controller: _prodNameController,
+            InputField(controller: _qtyController,
               labelText: 'Qty',
               textInputType: TextInputType.text,
             ),
             SizedBox(height: 15,),
-            InputField(controller: _prodNameController,
+            InputField(controller: _priceController,
               labelText: 'Price',
               textInputType: TextInputType.text,
             ),
