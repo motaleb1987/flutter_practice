@@ -1,9 +1,9 @@
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/module_13/CRUD/model/productModel.dart';
 import 'package:flutter_practice/module_13/CRUD/productcontroller.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 class Crud extends StatefulWidget {
   const Crud({super.key});
@@ -163,7 +163,7 @@ class _CrudState extends State<Crud> {
                   ),
                   )),
 
-                 isEdit ? ElevatedButton(
+                 if (isEdit) ElevatedButton(
                    style: ElevatedButton.styleFrom(
                      backgroundColor: Colors.orange,
                      foregroundColor: Colors.white,
@@ -185,8 +185,7 @@ class _CrudState extends State<Crud> {
                         );
                        await fetchData();
                         Navigator.pop(context);
-                     }, child: Text('Update'))
-                     : ElevatedButton(
+                     }, child: Text('Update')) else ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         foregroundColor: Colors.white,
@@ -240,51 +239,49 @@ class _CrudState extends State<Crud> {
               itemBuilder: (context, index) {
                 final item = productController.products[index];
                 return Card(
-                  child: Container(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 140,
-                          child: Image.network(item.img.toString()),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 140,
+                        child: Image.network(item.img.toString()),
+                      ),
+                      Text(
+                        item.productName.toString(),
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Text(
-                          item.productName.toString(),
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+                      Text('Price : \$${item.unitPrice} | Qty : ${item.qty}'),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              productController.searchProductById(item.sId.toString());
+                              productDialog(item, isEdit: true);
+                            },
+                            icon: Icon(Icons.edit, color: Colors.orange),
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-
-                        Text('Price : \$${item.unitPrice} | Qty : ${item.qty}'),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                productController.searchProductById(item.sId.toString());
-                                productDialog(item, isEdit: true);
-                              },
-                              icon: Icon(Icons.edit, color: Colors.orange),
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                              await  productController.deleteProduct(item.sId.toString()).then((onValue) async {
-                                if(onValue){
-                                 await fetchData();
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Product Deleted')));
-                                }else{
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Something Went Wrong ..')));
-                                }
-                              });
-                              },
-                              icon: Icon(Icons.delete, color: Colors.red),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          IconButton(
+                            onPressed: () async {
+                            await  productController.deleteProduct(item.sId.toString()).then((onValue) async {
+                              if(onValue){
+                               await fetchData();
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Product Deleted')));
+                              }else{
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Something Went Wrong ..')));
+                              }
+                            });
+                            },
+                            icon: Icon(Icons.delete, color: Colors.red),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 );
               },

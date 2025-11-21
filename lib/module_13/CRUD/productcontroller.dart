@@ -62,7 +62,6 @@ class ProductController {
       }),
     );
 
-    // print(response.body);
     if(response.statusCode == 200){
       isLoading = false;
       return true;
